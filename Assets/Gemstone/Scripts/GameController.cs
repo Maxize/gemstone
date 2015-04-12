@@ -2,20 +2,18 @@
 using System.Collections;
 
 public class GameController : MonoBehaviour {
-
 	public Gemstone gemstone;
-	//public AudioSource audio;
-
 	public int rowNum = 7;
 	public int columnNum = 10;
 	public ArrayList gemstones;
 
 	public AudioClip matchClip;
-	public AudioClip swapClip;
 	public AudioClip errorClip;
+	public AudioClip swapClip;
+
+	private Gemstone curGemstone;
 
 	private ArrayList matchGemstones;
-	private Gemstone curGemstone;
 
 
 	// Use this for initialization
@@ -34,7 +32,6 @@ public class GameController : MonoBehaviour {
 		if (MatchHorizontal() || MatchVertical()) {
 			RemoveMatches();
 		}
-
 	}
 
 	public Gemstone AddGemstone(int rowIndex, int columnIndex){
@@ -44,12 +41,11 @@ public class GameController : MonoBehaviour {
 		c.GetComponent<Gemstone>().UpdatePostion(rowIndex, columnIndex);
 		return c;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
 	}
-
 
 	public void Select (Gemstone gemstone)
 	{
@@ -69,14 +65,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator ExchangeAndMatch(Gemstone c1, Gemstone c2){
-
 		Exchange(c1, c2);
 		yield return new WaitForSeconds (0.5f);
 		if (MatchHorizontal () || MatchVertical ()) {
 			RemoveMatches ();
 		} else {
 			Debug.Log("已经交换了");
-
 			Exchange(c1, c2);
 		}
 	}
@@ -150,13 +144,16 @@ public class GameController : MonoBehaviour {
 			Gemstone tempGemstone = GetGemstone(i,c.columnIndex);
 			tempGemstone.rowIndex --;
 			SetGemstone(tempGemstone, tempGemstone.rowIndex, tempGemstone.columnIndex);
-			tempGemstone.UpdatePostion(tempGemstone.rowIndex, tempGemstone.columnIndex);
+			// tempGemstone.UpdatePostion(tempGemstone.rowIndex, tempGemstone.columnIndex);
+			tempGemstone.TweenToPostion(tempGemstone.rowIndex, tempGemstone.columnIndex);
 		}
 
 		Gemstone newGemstone = AddGemstone (rowNum, c.columnIndex);
 		newGemstone.rowIndex --;
 		SetGemstone (newGemstone, newGemstone.rowIndex, newGemstone.columnIndex);
-		newGemstone.UpdatePostion (newGemstone.rowIndex, newGemstone.columnIndex);
+		// newGemstone.UpdatePostion (newGemstone.rowIndex, newGemstone.columnIndex);
+		newGemstone.TweenToPostion (newGemstone.rowIndex, newGemstone.columnIndex);
+
 
 	}
 
@@ -188,10 +185,11 @@ public class GameController : MonoBehaviour {
 		c1.columnIndex = c2.columnIndex;
 		c2.columnIndex = tempColumnIndex;
 
-		c1.UpdatePostion (c1.rowIndex, c1.columnIndex);
-		c2.UpdatePostion (c2.rowIndex, c2.columnIndex);
+		// c1.UpdatePostion (c1.rowIndex, c1.columnIndex);
+		// c2.UpdatePostion (c2.rowIndex, c2.columnIndex);
+		c1.TweenToPostion (c1.rowIndex, c1.columnIndex);
+		c2.TweenToPostion (c2.rowIndex, c2.columnIndex);
+
 
 	}
-
-
 }

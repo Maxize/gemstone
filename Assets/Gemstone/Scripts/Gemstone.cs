@@ -12,9 +12,9 @@ public class Gemstone : MonoBehaviour {
 	public GameObject[] gemstoneBgs;
 	public int gemstoneType;
 
-	public GameController gameController;
-
 	public GameObject gemstoneBg;
+
+	public GameController gameController;
 	public SpriteRenderer spriteRenderer;
 
 	public bool isSelected {
@@ -31,6 +31,7 @@ public class Gemstone : MonoBehaviour {
 	void Start () {
 		gameController = GameObject.Find ("GameController").GetComponent<GameController>();
 		spriteRenderer = gemstoneBg.GetComponent<SpriteRenderer> ();
+
 	}
 	
 	// Update is called once per frame
@@ -42,6 +43,12 @@ public class Gemstone : MonoBehaviour {
 		rowIndex = _rowIndex;
 		columnIndex = _columnIndex;
 		this.transform.position = new Vector3 (columnIndex * 1.2f + xOffset, rowIndex * 1.2f + yOffset);
+	}
+
+	public void TweenToPostion(int _rowIndex, int _columnIndex){
+		rowIndex = _rowIndex;
+		columnIndex = _columnIndex;
+		iTween.MoveTo(this.gameObject,iTween.Hash("x",columnIndex * 1.2f + xOffset,"y", rowIndex * 1.2f + yOffset, "time", 0.3f));
 	}
 
 	public void RandomCreateGemstoneBg(){
