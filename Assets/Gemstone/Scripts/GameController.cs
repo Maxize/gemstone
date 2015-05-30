@@ -47,8 +47,7 @@ public class GameController : MonoBehaviour {
 	
 	}
 
-	public void Select (Gemstone gemstone)
-	{
+	public void Select (Gemstone gemstone) {
 		if (curGemstone == null) {
 			curGemstone = gemstone;
 			curGemstone.isSelected = true;
